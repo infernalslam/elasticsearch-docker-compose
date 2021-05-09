@@ -1,0 +1,104 @@
+PUT /_template/product?include_type_name=true
+{
+  "index_patterns": [
+    "product_*"
+  ],
+  "mappings": {
+    "_doc": {
+      "_source": {
+        "enabled": true
+      },
+      "dynamic": "false",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "is_active": {
+          "type": "integer"
+        },
+        "is_display": {
+          "type": "integer"
+        },
+        "product_name": {
+          "type": "text"
+        },
+        "price": {
+          "type": "float"
+        },
+        "discounted_price": {
+          "type": "float"
+        },
+        "product_category_id": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": "1",
+    "auto_expand_replicas" : "0-all",
+    "max_result_window": "5000",    
+  }
+}
+
+PUT /_template/product?include_type_name=true
+{
+  "index_patterns": [
+    "product_*"
+  ],
+  "mappings": {
+    "_doc": {
+      "_source": {
+        "enabled": true
+      },
+      "dynamic": "false",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "is_active": {
+          "type": "integer"
+        },
+        "is_display": {
+          "type": "integer"
+        },
+        "product_name": {
+          "type": "text",
+          "analyzer":"rebuilt_thai"
+        },
+        "price": {
+          "type": "float"
+        },
+        "discounted_price": {
+          "type": "float"
+        },
+        "product_category_id": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": "1",
+    "auto_expand_replicas" : "0-all",
+    "max_result_window": "5000",    
+    "analysis": {
+      "filter": {
+        "thai_stop": {
+          "type":       "stop",
+          "stopwords":  "_thai_" 
+        }
+      },
+      "analyzer": {
+        "rebuilt_thai": {
+          "tokenizer":  "thai",
+          "filter": [
+            "lowercase",
+            "decimal_digit",
+            "thai_stop"
+          ]
+        }
+      }
+    }
+  }
+}

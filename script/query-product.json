@@ -1,0 +1,168 @@
+GET /product/_doc/1
+
+GET /product/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": [
+        {
+          "term": {
+            "is_active": 1
+          }
+        },
+        {
+          "term": {
+            "is_display": 1
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": [
+        {
+          "range": {
+            "price": {
+              "gte": 5000,
+              "lte": 6000
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "nike",
+      "fields": [
+        "product_name"
+      ]
+    }
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "รองเท้า",
+      "fields": [
+        "product_name"
+      ]
+    }
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "price": {
+        "order": "asc"
+      }
+    },
+    "_score"
+  ]
+}
+
+GET /product/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "product_category_id": {
+      "terms": {
+        "field": "product_category_id"
+      }
+    }
+  }
+}
+
+
+GET /product/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "min_price": {
+      "min": {
+        "field": "price"
+      }
+    },
+    "max_price": {
+      "max": {
+        "field": "price"
+      }
+    }
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "from": 1,
+  "size": 2
+}
+
+GET /product/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": {
+    "_script": {
+      "type": "number",
+      "script": {
+        "id": "sort_by_price"
+      },
+      "order": "asc"
+    }
+  }
+}
+
+GET /product/_search
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "range": {
+          "qty": {
+            "gte": 1
+          }
+        }
+      }
+    }
+  }
+}

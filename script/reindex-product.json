@@ -1,0 +1,21 @@
+GET /_alias
+
+POST /_reindex?wait_for_completion=false
+{
+  "source": {
+    "index": "product_20210329_1529"
+  },
+  "dest": {
+    "index": "product_20210329_1613"
+  }
+}
+
+GET /_tasks?detailed=true&actions=*reindex
+
+POST /_aliases
+{
+  "actions" : [
+      { "remove" : { "index" : "product_20210329_1529", "alias" : "product" } },
+      { "add" : { "index" : "product_20210329_1613", "alias" : "product" } }
+  ]
+}

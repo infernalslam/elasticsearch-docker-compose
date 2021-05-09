@@ -1,0 +1,13 @@
+POST _scripts/sort_by_price
+{
+   "script": {
+     "lang": "painless",
+     "source": """
+      if(doc['discounted_price'].size() != 0 && doc['discounted_price'].value != null) {
+        return doc['discounted_price'].value;
+      } else {
+        return doc['price'].value;
+      }
+     """
+   }
+}
